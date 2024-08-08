@@ -1,0 +1,6 @@
+@TasteBitesApi_HostAddress = http://localhost:5125
+
+GET {{TasteBitesApi_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
