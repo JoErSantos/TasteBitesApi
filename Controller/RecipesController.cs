@@ -27,7 +27,7 @@ namespace TasteBitesApi.Controller
         [HttpGet]
         public async Task<IActionResult> getRecipies()
         {
-            List<Recipe> recipes = await _recipeRepository.getRecipesAsync();
+            List<Recipe> recipes = await _recipeRepository.GetRecipesAsync();
             return Ok(recipes);
         }
 
@@ -35,6 +35,9 @@ namespace TasteBitesApi.Controller
         [Authorize]
         public async Task<IActionResult> CreateNewRecipe([FromBody]CreateRecipeDto recipeDto)
         {
+            if(!ModelState.IsValid)
+                return BadRequest(ModelState);
+
             var username = User.GetUserName();
             var user = await _userManager.FindByNameAsync(username);
             if(user == null)
@@ -42,7 +45,7 @@ namespace TasteBitesApi.Controller
                 return StatusCode(500,"What?");
             }
             
-            Recipe newRecipe = await _recipeRepository.createNewRecipeAsync(recipeDto,user.Id);
+            Recipe newRecipe = await _recipeRepository.CreateNewRecipeAsync(recipeDto,user.Id);
 
             if (newRecipe == null)
                 return StatusCode(500,"Creation of new recipe wasn't possible");
@@ -50,7 +53,69 @@ namespace TasteBitesApi.Controller
             return Ok(newRecipe);
         }
 
+        [HttpGet]
+        [Route("{id}")]
+        public async Task<IActionResult> GetRecipeById([FromRoute]int id)
+        {
+            if(!ModelState.IsValid)
+                return BadRequest(ModelState);
 
+            var recipe = await _recipeRepository.GetRecipeByIdAsync(id);
+            if(recipe == null)
+                return NotFound("Recipe not found");
 
+            return Ok(recipe);
+        }
+
+        [HttpPut]
+        [Authorize]
+        [Route("{id:int}")]
+        public async Task<IActionResult> UpdateRecipe([FromRoute] int id, [FromBody] UpdateRecipeDto recipeDto)
+        {
+            try
+            {
+                if(!ModelState.IsValid)
+                    return BadRequest(ModelState);
+                
+                var username = User.GetUserName();
+                var user = await _userManager.FindByNameAsync(username);
+
+                var recipeUpdated = await _recipeRepository.UpdateRecipeAsync(id, recipeDto, user.Id);
+
+                if(recipeUpdated == null)
+                    return NotFound("The recipe you want to update does not exist");
+
+                return Ok(recipeUpdated);
+            }
+            catch(Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpDelete]
+        [Authorize]
+        [Route("{id:int}")]
+        public async Task<IActionResult> DeleteRecipe([FromRoute]int id)
+        {
+            try
+            {
+                if(!ModelState.IsValid)
+                    return BadRequest(ModelState);
+                
+                var username = User.GetUserName();
+                var user = await _userManager.FindByNameAsync(username);
+
+                var recipeDeleted = await _recipeRepository.DeleteRecipeAsync(id,user.Id);
+
+                if(recipeDeleted == null)
+                    return NotFound("The recipe you wanto to delete does not exist");
+
+                return NoContent();
+            }
+            catch (Exception ex){
+                return BadRequest(ex.Message);
+            }
+        }
     }
 }
