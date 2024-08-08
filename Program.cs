@@ -9,6 +9,7 @@ using Newtonsoft.Json;
 using TasteBitesApi.Data;
 using TasteBitesApi.Interfaces;
 using TasteBitesApi.Models;
+using TasteBitesApi.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -69,6 +70,7 @@ builder.Services.AddAuthentication(options =>
 /// Implement Interfaces, Services and Repositories HERE
 /// v                      v                           v 
 
+builder.Services.AddScoped<IRecipeRepository, RecipeRepository>();
 builder.Services.AddScoped<ITokenService, TokenService>();
 
 /// ^                      ^                           ^

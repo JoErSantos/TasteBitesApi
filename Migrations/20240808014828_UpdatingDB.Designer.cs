@@ -12,8 +12,8 @@ using TasteBitesApi.Data;
 namespace TasteBitesApi.Migrations
 {
     [DbContext(typeof(ApplicationDBContext))]
-    [Migration("20240808000100_Init")]
-    partial class Init
+    [Migration("20240808014828_UpdatingDB")]
+    partial class UpdatingDB
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -50,6 +50,20 @@ namespace TasteBitesApi.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "3226f6b8-be47-4801-96df-24b27c18f7c9",
+                            Name = "Admin",
+                            NormalizedName = "ADMIN"
+                        },
+                        new
+                        {
+                            Id = "0c9b8df2-c000-463c-ba11-3cbc19447896",
+                            Name = "User",
+                            NormalizedName = "USER"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -189,7 +203,7 @@ namespace TasteBitesApi.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Comments");
+                    b.ToTable("Comment");
                 });
 
             modelBuilder.Entity("TasteBitesApi.Models.Recipe", b =>
@@ -211,6 +225,9 @@ namespace TasteBitesApi.Migrations
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("DificultyLevel")
+                        .HasColumnType("int");
 
                     b.Property<string>("Ingredients")
                         .IsRequired()
@@ -237,20 +254,17 @@ namespace TasteBitesApi.Migrations
                     b.Property<float>("Rating")
                         .HasColumnType("real");
 
+                    b.Property<float>("Servings")
+                        .HasColumnType("real");
+
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(450)");
-
-                    b.Property<int>("dificultyLevel")
-                        .HasColumnType("int");
-
-                    b.Property<float>("servings")
-                        .HasColumnType("real");
 
                     b.HasKey("Id");
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Recipes");
+                    b.ToTable("Recipe");
                 });
 
             modelBuilder.Entity("TasteBitesApi.Models.User", b =>
@@ -371,21 +385,21 @@ namespace TasteBitesApi.Migrations
 
             modelBuilder.Entity("TasteBitesApi.Models.Comment", b =>
                 {
-                    b.HasOne("TasteBitesApi.Models.Recipe", "recipe")
+                    b.HasOne("TasteBitesApi.Models.Recipe", "Recipe")
                         .WithMany("Comments")
                         .HasForeignKey("RecipeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("TasteBitesApi.Models.User", "user")
+                    b.HasOne("TasteBitesApi.Models.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("recipe");
+                    b.Navigation("Recipe");
 
-                    b.Navigation("user");
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("TasteBitesApi.Models.Recipe", b =>

@@ -1,5 +1,8 @@
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace TasteBitesApi.Models
 {
+    [Table("Comment")]
     public class Comment
     {
         //Props
@@ -10,9 +13,9 @@ namespace TasteBitesApi.Models
 
         //FKs
         public int RecipeId { get; set; }
-        public Recipe recipe { get; set;}  //Navigation properties
+        public Recipe Recipe { get; set;}  //Navigation properties
         public string UserId { get; set; }
-        public User user{ get; set; }  //Navigation properties
+        public User User{ get; set; }  //Navigation properties
 
         
         
