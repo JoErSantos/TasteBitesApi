@@ -105,6 +105,18 @@ builder.Services.AddSwaggerGen(option =>
     });
 });
 
+
+builder.Services.AddCors(options => 
+{
+    options.AddPolicy("newCorsPolicy", app => 
+    {
+        app.AllowAnyOrigin()
+        .AllowAnyHeader()
+        .AllowAnyMethod();
+    });
+});
+
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -115,6 +127,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseCors("newCorsPolicy");
 
 app.UseAuthentication();
 app.UseAuthorization();

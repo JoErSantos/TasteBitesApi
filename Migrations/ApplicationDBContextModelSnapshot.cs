@@ -51,13 +51,13 @@ namespace TasteBitesApi.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "3226f6b8-be47-4801-96df-24b27c18f7c9",
+                            Id = "067d133a-451b-4f25-8859-c91b1b343f4b",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "0c9b8df2-c000-463c-ba11-3cbc19447896",
+                            Id = "c3eec8f6-9a19-4aa2-9f6c-71a3e2b99d9e",
                             Name = "User",
                             NormalizedName = "USER"
                         });
@@ -250,6 +250,9 @@ namespace TasteBitesApi.Migrations
 
                     b.Property<float>("Rating")
                         .HasColumnType("real");
+
+                    b.Property<long>("RatingTotalVotes")
+                        .HasColumnType("bigint");
 
                     b.Property<float>("Servings")
                         .HasColumnType("real");

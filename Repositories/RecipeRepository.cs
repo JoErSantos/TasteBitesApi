@@ -25,11 +25,11 @@ namespace TasteBitesApi.Repositories
                 PreparationTime = CreateRecipeDto.PreparationTime,
                 Servings = CreateRecipeDto.Servings,
                 DificultyLevel = CreateRecipeDto.DificultyLevel,
-                Description  = CreateRecipeDto.Name,
-                Ingredients  = CreateRecipeDto.Name,
-                Instructions  = CreateRecipeDto.Name,
-                NutrionalValues  = CreateRecipeDto.Name,
-                Category  = CreateRecipeDto.Name,
+                Description  = CreateRecipeDto.Description,
+                Ingredients  = CreateRecipeDto.Ingredients,
+                Instructions  = CreateRecipeDto.Instructions,
+                NutrionalValues  = CreateRecipeDto.NutrionalValues,
+                Category  = CreateRecipeDto.Category,
                 CreatorID = UserID
             };
 
@@ -87,11 +87,11 @@ namespace TasteBitesApi.Repositories
             recipeToUpdate.PreparationTime = UpdateRecipeDto.PreparationTime;
             recipeToUpdate.Servings = UpdateRecipeDto.Servings;
             recipeToUpdate.DificultyLevel = UpdateRecipeDto.DificultyLevel;
-            recipeToUpdate.Description  = UpdateRecipeDto.Name;
-            recipeToUpdate.Ingredients  = UpdateRecipeDto.Name;
-            recipeToUpdate.Instructions  = UpdateRecipeDto.Name;
-            recipeToUpdate.NutrionalValues  = UpdateRecipeDto.Name;
-            recipeToUpdate.Category  = UpdateRecipeDto.Name;
+            recipeToUpdate.Description  = UpdateRecipeDto.Description;
+            recipeToUpdate.Ingredients  = UpdateRecipeDto.Ingredients;
+            recipeToUpdate.Instructions  = UpdateRecipeDto.Instructions;
+            recipeToUpdate.NutrionalValues  = UpdateRecipeDto.NutrionalValues;
+            recipeToUpdate.Category  = UpdateRecipeDto.Category;
 
             await _context.SaveChangesAsync();
 

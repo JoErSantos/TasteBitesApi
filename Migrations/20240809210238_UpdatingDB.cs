@@ -174,6 +174,7 @@ namespace TasteBitesApi.Migrations
                     NutrionalValues = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Likes = table.Column<long>(type: "bigint", nullable: false),
                     Rating = table.Column<float>(type: "real", nullable: false),
+                    RatingTotalVotes = table.Column<long>(type: "bigint", nullable: false),
                     Category = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CreatorID = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: true)
@@ -222,8 +223,8 @@ namespace TasteBitesApi.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "0c9b8df2-c000-463c-ba11-3cbc19447896", null, "User", "USER" },
-                    { "3226f6b8-be47-4801-96df-24b27c18f7c9", null, "Admin", "ADMIN" }
+                    { "067d133a-451b-4f25-8859-c91b1b343f4b", null, "Admin", "ADMIN" },
+                    { "c3eec8f6-9a19-4aa2-9f6c-71a3e2b99d9e", null, "User", "USER" }
                 });
 
             migrationBuilder.CreateIndex(

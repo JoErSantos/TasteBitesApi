@@ -12,12 +12,14 @@ namespace TasteBitesApi.Models
         public float Servings { get; set; }
         public int DificultyLevel { get; set; }
         public string Description { get; set; } = String.Empty;
-        public string Ingredients { get; set; } = String.Empty;
-        public string Instructions { get; set; } = String.Empty;
+        public List<string> Ingredients { get; set; } = new List<string>();
+        public List<string> Instructions { get; set; } = new List<string>();
         public string NutrionalValues { get; set; } = String.Empty;
         public long Likes { get; set; } = 0;
         public float Rating { get; set; } = 0;
+        public long RatingTotalVotes { get; set; } = 0;
         public string Category { get; set; } = String.Empty;
+        public DateTime CreationTime = DateTime.Now;
 
         //FKs
         public string CreatorID { get; set; }

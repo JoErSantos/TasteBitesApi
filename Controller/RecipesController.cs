@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using TasteBitesApi.Dtos.Recipes;
 using TasteBitesApi.Interfaces;
+using TasteBitesApi.Mappers;
 using TasteBitesApi.Models;
 
 namespace TasteBitesApi.Controller
@@ -28,7 +29,7 @@ namespace TasteBitesApi.Controller
         public async Task<IActionResult> getRecipies()
         {
             List<Recipe> recipes = await _recipeRepository.GetRecipesAsync();
-            return Ok(recipes);
+            return Ok(recipes.Select(x => x.ToRecipeDto()).ToList());
         }
 
         [HttpPost]
@@ -40,17 +41,13 @@ namespace TasteBitesApi.Controller
 
             var username = User.GetUserName();
             var user = await _userManager.FindByNameAsync(username);
-            if(user == null)
-            {
-                return StatusCode(500,"What?");
-            }
             
             Recipe newRecipe = await _recipeRepository.CreateNewRecipeAsync(recipeDto,user.Id);
 
             if (newRecipe == null)
                 return StatusCode(500,"Creation of new recipe wasn't possible");
 
-            return Ok(newRecipe);
+            return Ok(newRecipe.ToRecipeDto());
         }
 
         [HttpGet]
@@ -64,7 +61,7 @@ namespace TasteBitesApi.Controller
             if(recipe == null)
                 return NotFound("Recipe not found");
 
-            return Ok(recipe);
+            return Ok(recipe.ToRecipeDto());
         }
 
         [HttpPut]
@@ -85,7 +82,7 @@ namespace TasteBitesApi.Controller
                 if(recipeUpdated == null)
                     return NotFound("The recipe you want to update does not exist");
 
-                return Ok(recipeUpdated);
+                return Ok(recipeUpdated.ToRecipeDto());
             }
             catch(Exception ex)
             {
